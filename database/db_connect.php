@@ -1,14 +1,17 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "wampville";
+// variables for setup
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "wampville";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// creat a MySQL connection object and connect.
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+// if connection fails let em know
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    echo "Connected successfully!";
+echo "Connected successfully!";
 ?>

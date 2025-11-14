@@ -2,31 +2,53 @@
 session_start();
 include '../database/db_connect.php';
 
-// php login
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $username = $_POST['username'];
-    $password = $_POST['password']; // simple hash. change later PLEASE
+    $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+    // prepare select to get user if they exist
+    // bind the username to it and execute
+    $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
 
-    if ($result->num_rows > 0) {
-        $_SESSION['username'] = $username;
-        header("Location: ../postauth/dashboard.php");
-        exit();
-    } else {
-        $error = "Invalid username or password";
+    // get the result of that execute
+    $result = $stmt->get_result();
+
+    // if exactly 1 user exists go ahead (dupe users arent possible. just in case)
+    if ($result->num_rows === 1) {
+
+        // get user as associative array
+        $user = $result->fetch_assoc();
+        $hashed = $user['password'];
+
+        // hash current password and compare to the hashed one
+        if (password_verify($password, $hashed)) {
+
+            // store user data in session to check later
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['user_id'] = $user['id'];
+
+            // redirect
+            header("Location: ../postauth/dashboard.php");
+            exit();
+        }
     }
-}
 
+    // if login fails dont login
+    $error = "Invalid username or password";
+    $stmt->close();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Halo: ST - Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -38,6 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" placeholder="Password" required><br>
             <button type="submit">Login</button>
         </form>
+
+        <p>Don't have an account? 
+            <a href="register.php">Register here</a>
+        </p>
+
         <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
   </div>
 </body>

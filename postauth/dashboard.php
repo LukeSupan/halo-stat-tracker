@@ -28,7 +28,7 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $res = $stmt->get_result();
 
-// adin check yup
+// admin check yup
 if ($res->num_rows === 1) {
     $row = $res->fetch_assoc();
     $is_admin = (bool)$row['is_admin'];
@@ -41,17 +41,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_admin) {
     $deaths = $_POST['deaths'];
     $playstyle = $_POST['playstyle'];
 
-    $stmt = $conn->prepare("
-        INSERT INTO matches (user_id, kills, deaths, playstyle)
-        VALUES (?, ?, ?, ?)
-    ");
-    $stmt->bind_param("iiis", $user_id, $kills, $deaths, $playstyle);
-    $stmt->execute();
-    $stmt->close();
+    // kills and deaths cant be negative
+    if ($kills < 0 || $deaths < 0) {
+        $error = "Kills and Deaths cannot be negative.";
+    } else {
+        $stmt = $conn->prepare("
+            INSERT INTO matches (user_id, kills, deaths, playstyle)
+            VALUES (?, ?, ?, ?)
+        ");
+        $stmt->bind_param("iiis", $user_id, $kills, $deaths, $playstyle);
+        $stmt->execute();
+        $stmt->close();
 
-    // refresh page if user is admin to add thing
-    header("Location: dashboard.php");
-    exit();
+        // refresh page if user is admin to add thing
+        header("Location: dashboard.php");
+        exit();
+    }
 }
 
 // get all matches for everyone and sort them by played at data (recent first)
@@ -93,8 +98,8 @@ $matches = $conn->query("
             <div class="admin-panel">
                 <h3>Submit New Match</h3>
                 <form method="POST">
-                    <input type="number" name="kills" placeholder="Kills" required>
-                    <input type="number" name="deaths" placeholder="Deaths" required>
+                    <input type="number" name="kills" placeholder="Kills" required min="0">
+                    <input type="number" name="deaths" placeholder="Deaths" required min="0">
 
                     <select name="playstyle" required>
                         <option value="" disabled selected>Playstyle</option>

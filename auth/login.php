@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="page-wrapper">
         <h1 class="site-title">Halo: Stat Tracker</h1>
 
-        <div class="login-container">
+        <div class="auth-container">
 
             <h2>Login</h2>
             <form method="POST" action="">

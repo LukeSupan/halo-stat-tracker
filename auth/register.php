@@ -15,10 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
     $stmt->bind_param("ss", $username, $hashed);
 
-    // if successful, take them to login automatically
-    if($stmt->execute()) {
+    // try to add it. if not show error
+    try {
+        $stmt->execute();
         header("Location: login.php");
         exit();
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() === 1062) {
+            $error = "Username already exists";
+        } else {
+            $error = "Registration failed: " . $e->getMessage();
+        }
     }
 
     // if register fails dont go to login
@@ -40,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="page-wrapper">
         <h1 class="site-title">Halo: Stat Tracker</h1>
-        <div class="register-container">
+        <div class="auth-container">
             <h2>Register</h2>
             <form method="POST" action="">
                 <input type="text" name="username" placeholder="Username" required><br>

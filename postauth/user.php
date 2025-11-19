@@ -106,44 +106,43 @@ $matches = $conn->query("
 <head>
     <meta charset="UTF-8">
     <title>Halo: ST — <?php echo htmlspecialchars($username); ?></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
+    <div class="user-wrapper">
+        <a class="back-link" href="dashboard.php">← Back to Dashboard</a>
+        <h1 class="user-title"><?php echo htmlspecialchars($username); ?> — Stats</h1>
 
-    <a href="dashboard.php">← Back to Dashboard</a>
-    <h1><?php echo htmlspecialchars($username); ?> — Stats</h1>
+        <div class="overview">
+            <h2>Overview</h2>
+            <ul>
+                <li><strong>Total Kills:</strong> <?php echo $total_kills; ?></li>
+                <li><strong>Total Deaths:</strong> <?php echo $total_deaths; ?></li>
+                <li><strong>Average Kills:</strong> <?php echo $avg_kills; ?></li>
+                <li><strong>Average Deaths:</strong> <?php echo $avg_deaths; ?></li>
+                <li><strong>K/D Ratio:</strong> <?php echo $kd; ?></li>
+                <li><strong>Most Common Playstyle:</strong> <?php echo ucfirst($most_common_style); ?></li>
+            </ul>
+        </div>
 
-    <hr>
-
-    <h2>Overview</h2>
-    <ul>
-        <li><strong>Total Kills:</strong> <?php echo $total_kills; ?></li>
-        <li><strong>Total Deaths:</strong> <?php echo $total_deaths; ?></li>
-        <li><strong>Average Kills:</strong> <?php echo $avg_kills; ?></li>
-        <li><strong>Average Deaths:</strong> <?php echo $avg_deaths; ?></li>
-        <li><strong>K/D Ratio:</strong> <?php echo $kd; ?></li>
-        <li><strong>Most Common Playstyle:</strong> <?php echo ucfirst($most_common_style); ?></li>
-    </ul>
-
-    <hr>
-
-    <h2>Last 5 Matches</h2>
-
-    <?php if ($matches->num_rows > 0): ?>
-        <?php while ($m = $matches->fetch_assoc()): ?>
-            <div class="match-card">
-                <ul>
-                    <li>Kills: <?php echo $m['kills']; ?></li>
-                    <li>Deaths: <?php echo $m['deaths']; ?></li>
-                    <li>Playstyle: <?php echo ucfirst($m['playstyle']); ?></li>
-                </ul>
-                <small>Played at: <?php echo $m['played_at']; ?></small>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>No matches recorded.</p>
-    <?php endif; ?>
-
+        <h2>Last 5 Matches</h2>
+        <div class="match-list">
+            <?php if ($matches->num_rows > 0): ?>
+                <?php while ($m = $matches->fetch_assoc()): ?>
+                    <div class="match-card">
+                        <ul>
+                            <li>Kills: <?php echo $m['kills']; ?></li>
+                            <li>Deaths: <?php echo $m['deaths']; ?></li>
+                            <li>Playstyle: <?php echo ucfirst($m['playstyle']); ?></li>
+                        </ul>
+                        <small>Played at: <?php echo $m['played_at']; ?></small>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No matches recorded.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 </body>
 </html>

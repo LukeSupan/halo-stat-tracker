@@ -1,0 +1,99 @@
+body {
+    background: #0a0d17;
+    color: #d0d6e0;
+    font-family: monospace;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* center page and content, set max width */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+}
+
+/* page header */
+.site-title {
+    text-align: center;
+    color: #cedaf2;
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+/* container for auth (could just be auth-container technically but its fine) */
+.login-container,
+.register-container {
+    background: #1a2233;
+    padding: 20px;
+    border-radius: 10px;
+    width: 460px;
+    text-align: center;
+    border: 1px solid #2d3750;
+}
+
+/* titles for sections */
+h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 2.1rem;
+    color: #d0d6e0;
+}
+
+
+/* switch text below auth box */
+.auth-switch-text {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.9rem;
+}
+
+/* auth input */
+input[type="text"],
+input[type="password"] {
+    font-size: 1.1rem;
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #39445a;
+    background: #0f1420;
+    color: #d4d9e5;
+}
+
+button {
+    width: 95%;
+    padding: 10px;
+    margin-top: 25px;
+    border-radius: 6px;
+    background: #3f4c6b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background: #566282;
+}
+
+a {
+    color: #8aa4ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #ff6b6b;
+    margin-top: 10px;
+}

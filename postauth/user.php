@@ -2,6 +2,7 @@
 session_start();
 include '../database/db_connect.php';
 
+
 // logged in confirmation
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/login.php");

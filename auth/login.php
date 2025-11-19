@@ -52,23 +52,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Halo: ST - Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form method="POST" action="">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <button type="submit">Login</button>
-        </form>
+    <div class="page-wrapper">
+        <h1 class="site-title">Halo: Stat Tracker</h1>
 
-        <p>Don't have an account? 
-            <a href="register.php">Register here</a>
-        </p>
+        <div class="login-container">
 
-        <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
-  </div>
+            <h2>Login</h2>
+            <form method="POST" action="">
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="auth-switch-text">Don't have an account? 
+                <a href="register.php">Register here</a>
+            </p>
+
+            <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
+        </div>
+    </div>
 </body>
 </html>

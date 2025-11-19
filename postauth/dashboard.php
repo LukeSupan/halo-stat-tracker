@@ -3,6 +3,7 @@ session_start();
 include '../database/db_connect.php';
 include '../includes/functions.php';
 
+
 // stuff that needs to happen serverside
 // check if admin (function probably) TASK 1
 // if admin then display the match input TASK 2
@@ -74,65 +75,65 @@ $matches = $conn->query("
 <head>
     <meta charset="UTF-8">
     <title>Halo: ST - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
 
-    <h1>Welcome, <?php echo htmlspecialchars($username); ?></h1>
-    <a href="../auth/logout.php">Logout</a>
+    <div class="dashboard-wrapper">
 
+        <h1 class="site-title">Halo: Stat Tracker</h1>
 
-    <hr>
-
-    <!-- ADMIN MATCH SUBMISSION SECTION -->
-    <?php if ($is_admin): ?>
-        <div class="admin-panel">
-            <h2>Submit New Match</h2>
-            <form method="POST" action="">
-                <input type="number" name="kills" placeholder="Kills" required><br>
-                <input type="number" name="deaths" placeholder="Deaths" required><br>
-
-                <select name="playstyle" required>
-                    <option value="" disabled selected>Playstyle</option>
-                    <option value="infantry">Infantry</option>
-                    <option value="vehicle">Vehicle</option>
-                    <option value="mixed">Mixed</option>
-                </select><br>
-
-                <button type="submit">Post Match</button>
-            </form>
+        <div class="dashboard-header">
+            <h2>Welcome, <?php echo htmlspecialchars($username); ?></h2>
+            <a class="logout-link" href="../auth/logout.php">Logout</a>
         </div>
-    <?php endif; ?>
 
-    <hr>
+        <?php if ($is_admin): ?>
+            <div class="admin-panel">
+                <h3>Submit New Match</h3>
+                <form method="POST">
+                    <input type="number" name="kills" placeholder="Kills" required>
+                    <input type="number" name="deaths" placeholder="Deaths" required>
 
-    <!-- DISPLAY MATCH SECTION -->
-     <h2>Recent Matches</h2>
+                    <select name="playstyle" required>
+                        <option value="" disabled selected>Playstyle</option>
+                        <option value="infantry">Infantry</option>
+                        <option value="vehicle">Vehicle</option>
+                        <option value="mixed">Mixed</option>
+                    </select>
 
-    <div class="match-list">
-        <?php while ($m = $matches->fetch_assoc()): ?>
-            <div class="match-card">
-                <p>
-                    <strong>
-                        <a href="user.php?id=<?php echo $m['user_id']; ?>">
+                    <button type="submit">Post Match</button>
+                </form>
+            </div>
+        <?php endif; ?>
+
+        <h2 class="section-title">Recent Matches</h2>
+
+        <div class="match-list">
+            <?php while ($m = $matches->fetch_assoc()): ?>
+                <div class="match-card">
+
+                    <div class="match-card-header">
+                        <a class="match-username" href="user.php?id=<?php echo $m['user_id']; ?>">
                             <?php echo htmlspecialchars($m['username']); ?>
                         </a>
-                    </strong>
-                    played a match:
-                </p>
+                        <span class="match-date"><?php echo $m['played_at']; ?></span>
+                    </div>
 
-                <ul>
-                    <li>Kills: <?php echo $m['kills']; ?></li>
-                    <li>Deaths: <?php echo $m['deaths']; ?></li>
-                    <li>Playstyle: <?php echo ucfirst($m['playstyle']); ?></li>
-                </ul>
+                    <div class="match-stats-grid">
+                        <div>Kills: <?php echo $m['kills']; ?></div>
+                        <div>Deaths: <?php echo $m['deaths']; ?></div>
+                        <div>KD: <?php echo round($m['kills'] / max($m['deaths'],1), 2); ?></div>
+                        <div>Playstyle: <?php echo ucfirst($m['playstyle']); ?></div>
+                    </div>
 
-                <small>Played at: <?php echo $m['played_at']; ?></small>
-            </div>
-        <?php endwhile; ?>
+                </div>
+            <?php endwhile; ?>
+        </div>
+
     </div>
 
-
 </body>
+
 </html>

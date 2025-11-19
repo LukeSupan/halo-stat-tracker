@@ -2,6 +2,7 @@
 session_start();
 include '../database/db_connect.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = $_POST['username'];
@@ -33,23 +34,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Halo: ST - Register</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
-    <div class="register-container">
-        <h2>Register</h2>
-        <form method="POST" action="">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <button type="submit">Register</button>
-        </form>
+    <div class="page-wrapper">
+        <h1 class="site-title">Halo: Stat Tracker</h1>
+        <div class="register-container">
+            <h2>Register</h2>
+            <form method="POST" action="">
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <button type="submit">Register</button>
+            </form>
 
-        <p>Have an account? 
-            <a href="login.php">Login here</a>
-        </p>
+            <p class="auth-switch-text">Have an account? 
+                <a href="login.php">Login here</a>
+            </p>
 
-        <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
+            <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
+        </div>
     </div>
 </body>
 </html>

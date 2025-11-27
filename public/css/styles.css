@@ -1,3 +1,5 @@
+
+/* used ai a few times to basically just list all of the stuff i needed before i changed it to a more fitting halo style. */
 body {
     background: #0a0d17;
     color: #d0d6e0;
@@ -181,17 +183,16 @@ a:hover {
     gap: 15px;
 }
 
-/* Each Match Card */
+/* each individual match card */
 .match-card {
     background: #1a2233;
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #2d3750;
     width: 100%;
-    box-sizing: border-box; /* prevents overflow */
+    box-sizing: border-box;
 }
 
-/* Match Card Header */
 .match-card-header {
     display: flex;
     justify-content: space-between;
@@ -269,4 +270,70 @@ a:hover {
 .stat-card span {
     font-size: 1.3rem;
     font-weight: 700;
+}
+
+
+/* || EDIT MATCH (inside match cards) also DELETE but its short */
+/* ai gave me general layout. i havent used details before so i used it to see if anything was done differently with it. the answer is no. then i just change what i was given to look better */
+.match-actions details {
+    margin-top: 10px;
+}
+
+.match-actions summary {
+    cursor: pointer;
+    color: #8aa4ff;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.match-actions summary:hover {
+    text-decoration: underline;
+}
+
+.match-actions form {
+    background: #111827;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #2d3750;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.match-actions form input,
+.match-actions form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #39445a;
+    background: #0f1420;
+    color: #d4d9e5;
+    box-sizing: border-box;
+    appearance: none;
+}
+
+
+.match-actions .save-button {
+    width: 100%;
+    padding: 10px;
+    background: #3f4c6b;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.match-actions .save-button:hover {
+    background: #566282;
+}
+
+.delete-btn {
+    display: inline-block;
+    margin-top: 10px;
+    color: #ff6b6b;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
 }
